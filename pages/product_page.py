@@ -16,9 +16,25 @@ class ProductPage(BasePage):
     def add_to_basket_message_is_presented(self):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_ADDING), "Message about adding is not presented"
 
+    def should_item_in_basket(self):
+        self.should_item_name_equal()
+        self.should_item_cost_equal()
+
+    def should_be_success_message(self):
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not presented"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented"
+
+    def should_not_be_disappeared_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not disappeared"
+
     def should_item_name_equal(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-        message = self.browser.find_element(*ProductPageLocators.MESSAGE_ADDING).text
+        message = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE).text
         assert product_name == message, "No product name in the message about adding to basket"
 
     def should_item_cost_equal(self):
